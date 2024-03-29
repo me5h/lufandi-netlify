@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Background Updater</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Slideshow</title>
+    <link rel="stylesheet" href="/css/slideshow.css">
 </head>
 <body>
-    <div class="content">
-        <!-- Content and form go here -->
-        <a href="/submit.html">Upload New Background</a> <!-- Example link -->
-    </div>
-    <script src="script.js"></script>
+    <div id="slideshow-container"></div>
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+
+    <script src="/js/slideshow.js"></script>
+    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+    <script src="/js/onMessage.js"></script>
 </body>
 </html>

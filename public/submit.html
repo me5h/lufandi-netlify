@@ -4,30 +4,16 @@
     <meta charset="UTF-8">
     <title>Upload Background Media</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="back-link">
         <a href="index.html">Back to Home</a>
     </div>
-    <form action="/.netlify/functions/upload" method="post" id="my-awesome-dropzone"></form>
+    <div>Upload file here</div>
+    <form class="dropzone" id="my-awesome-dropzone"></form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
-    <script>
-        Dropzone.options.myAwesomeDropzone = {
-            init: function() {
-                this.on("success", function(file, response) {
-                    // Optionally, send the file URL to the server to update all clients
-                    fetch('/.netlify/functions/update-image', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ url: 'your-image-url' }),
-                    });
-
-                });
-            }
-        };
-    </script>
+    <script src="/js/upload.js"></script>
 </body>
 </html>

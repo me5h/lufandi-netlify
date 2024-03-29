@@ -1,0 +1,7 @@
+/* Ensure the Dropzone is visible */
+#my-awesome-dropzone {
+    min-height: 200px; /* Adjust based on your needs */
+    border: 2px dashed #0087F7; /* Example styling */
+    background: white;
+    padding: 54px;
+}
