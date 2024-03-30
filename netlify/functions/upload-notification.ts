@@ -6,6 +6,7 @@ const s3Client = new S3({
   accessKeyId: process.env.STORAGE_ACCESS_KEY,
   secretAccessKey: process.env.STORAGE_SECRET_KEY,
   endpoint: process.env.STORAGE_ENDPOINT,
+  region: process.env.STORAGE_REGION,
   s3ForcePathStyle: true,
   signatureVersion: 'v4',
 });
