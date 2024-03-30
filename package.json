@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "echo Environment variable example: $STORAGE_REGION && tsc",
     "build:netlify": "netlify-lambda build netlify/functions",
     "start:local": "NODE_ENV=local node -r dotenv/config public/index.html dotenv_config_path=.env.local",
     "start:dev": "NODE_ENV=development node -r dotenv/config public/index.html dotenv_config_path=.env.dev",

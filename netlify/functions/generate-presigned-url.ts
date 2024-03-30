@@ -5,6 +5,7 @@ const s3Client = new S3({
     accessKeyId: process.env.STORAGE_ACCESS_KEY,
     secretAccessKey: process.env.STORAGE_SECRET_KEY,
     endpoint: process.env.STORAGE_ENDPOINT,
+    region: process.env.STORAGE_REGION,
     s3ForcePathStyle: true,
     signatureVersion: 'v4',
 });
@@ -16,7 +17,7 @@ const handler: Handler = async (event) => {
 
     try {
         const { fileName } = JSON.parse(event.body);
-
+        console.log('Environment Variable:', process.env.YOUR_VARIABLE_NAME);
         // Use the fileName from the client to generate the presigned URL
         const presignedUrl = await s3Client.getSignedUrlPromise('putObject', {
             Bucket: process.env.STORAGE_BUCKET_NAME,
