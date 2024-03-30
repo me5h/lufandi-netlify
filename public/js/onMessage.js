@@ -12,14 +12,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             authUrl: '/.netlify/functions/generate-ably-token'
         });
 
+        // Check for successful connection
+        ably.connection.on('connected', () => {
+            console.log('Successfully connected to Ably!');
+        });
+
+        // Monitor connection state changes and log them
+        ably.connection.on('stateChange', stateChange => {
+            console.log('Ably connection state changed:', stateChange.current);
+        });
+
         const channel = ably.channels.get('file-uploads');
 
         channel.subscribe('new-file', (message) => {
-            // Emit a custom event containing the downloadUrl
+            console.log('New message received:', message.data);
+
+            // Assuming message.data contains the URL or other data you need
             const event = new CustomEvent('new-image', { detail: message.data.downloadUrl });
             document.dispatchEvent(event);
         });
     } catch (err) {
-        console.error(err);
+        console.error('Error setting up Ably:', err);
     }
 });
