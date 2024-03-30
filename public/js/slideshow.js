@@ -1,10 +1,13 @@
 const Slideshow = (() => {
     let images = [];
     let currentIndex = 0;
+    let autoplayInterval = null;
 
-    const container = document.getElementById('slideshow-container');
+    const container = document.getElementById('slideshow');
     const nextButton = document.getElementById('next');
     const prevButton = document.getElementById('prev');
+    const fullscreenButton = document.getElementById('fullscreen');
+    const slideshowContainer = document.getElementById('slideshow-container');
 
     const renderImage = () => {
         if (images.length === 0) {
@@ -12,10 +15,7 @@ const Slideshow = (() => {
             return;
         }
         container.style.backgroundImage = `url('${images[currentIndex]}')`;
-        container.style.backgroundSize = 'cover';
-        container.style.backgroundPosition = 'center';
     };
-    
 
     const nextImage = () => {
         if (images.length > 0) {
@@ -31,13 +31,43 @@ const Slideshow = (() => {
         }
     };
 
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            slideshowContainer.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    };
+
+    const startAutoplay = () => {
+        if (autoplayInterval) return;
+        autoplayInterval = setInterval(nextImage, 3000); // 3 seconds for each slide
+    };
+
+    const stopAutoplay = () => {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+    };
+
     nextButton.addEventListener('click', nextImage);
     prevButton.addEventListener('click', prevImage);
+    fullscreenButton.addEventListener('click', toggleFullscreen);
+
+    slideshowContainer.addEventListener('mouseenter', stopAutoplay);
+    slideshowContainer.addEventListener('mouseleave', startAutoplay);
+
+    // Start autoplay by default
+    startAutoplay();
 
     // Listen for the custom event and add the received image URL to the slideshow
     document.addEventListener('new-image', (event) => {
         const imageUrl = event.detail;
-        Slideshow.addImage(imageUrl);
+        images.push(imageUrl);
+        if (images.length === 1) {
+            renderImage();
+        }
     });
 
     return {

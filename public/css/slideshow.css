@@ -1,12 +1,17 @@
 .slideshow-container {
-  max-width: 600px;
-  position: relative;
-  margin: auto;
-  overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    position: relative;
 }
-#slideshow-container {
-    height: 300px; /* Set a specific height */
+
+.slideshow {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
 }
+
 .slide {
   display: none;
 }
