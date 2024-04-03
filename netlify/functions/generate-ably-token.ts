@@ -1,4 +1,3 @@
-// Simplified example based on your existing function
 import { Handler } from '@netlify/functions';
 import Ably from 'ably';
 
@@ -9,12 +8,22 @@ const handler: Handler = async (event) => {
         const tokenDetails = await ablyRestClient.auth.createTokenRequest({ clientId: 'slideshow-client' });
         return {
             statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*", // Allow requests from any domain
+                "Access-Control-Allow-Headers": "Content-Type", // Permit Content-Type header
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS" // Allowed methods for this endpoint
+            },
             body: JSON.stringify(tokenDetails),
         };
     } catch (error) {
         console.error('Error generating Ably token:', error);
         return {
             statusCode: 500,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
+            },
             body: JSON.stringify({ error: 'Failed to generate Ably token' }),
         };
     }
