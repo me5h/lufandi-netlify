@@ -13,6 +13,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             authUrl: '/.netlify/functions/generate-ably-token'
         });
 
+        ably.connection.on('failed', () => {
+            console.log('Connection to Ably failed');
+        });
+        
+        ably.connection.on('error', (error) => {
+            console.log('Ably connection error:', error);
+        });
+        
         // Check for successful connection
         ably.connection.on('connected', () => {
             console.log('Successfully connected to Ably!');
