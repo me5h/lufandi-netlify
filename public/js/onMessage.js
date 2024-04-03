@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Failed to fetch Ably token: ${tokenResponse.statusText}`);
         }
         const tokenDetails = await tokenResponse.json();
-        console.log(tokenDetails)
+        console.log('Token details:', tokenDetails);
         // Initialize the Ably client with the fetched token details
         const ably = new Ably.Realtime({
-            authUrl: '/.netlify/functions/generate-ably-token'
+            authUrl: '/.netlify/functions/generate-ably-token',
+            log: { level: 4 } // Verbose logging
         });
 
         ably.connection.on('failed', () => {
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ably.connection.on('error', (error) => {
             console.log('Ably connection error:', error);
         });
-        
+
         // Check for successful connection
         ably.connection.on('connected', () => {
             console.log('Successfully connected to Ably!');
