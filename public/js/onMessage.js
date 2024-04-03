@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('onMessage.js')
     try {
         // Fetch the token details from your Netlify function
         const tokenResponse = await fetch('/.netlify/functions/generate-ably-token');
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Failed to fetch Ably token: ${tokenResponse.statusText}`);
         }
         const tokenDetails = await tokenResponse.json();
-
+        console.log(tokenDetails)
         // Initialize the Ably client with the fetched token details
         const ably = new Ably.Realtime({
             authUrl: '/.netlify/functions/generate-ably-token'
