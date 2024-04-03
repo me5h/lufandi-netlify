@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Initialize the Ably client with the fetched token details
         const ably = new Ably.Realtime({
-            tokenDetails, // Use tokenDetails directly
+            authUrl: '/.netlify/functions/generate-ably-token',
             logLevel: 4 // Set the log level for detailed logging
         });
 
