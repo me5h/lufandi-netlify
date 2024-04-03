@@ -9,9 +9,10 @@ const handler: Handler = async (event) => {
         return {
             statusCode: 200,
             headers: {
-                "Access-Control-Allow-Origin": "*", // Allow requests from any domain
-                "Access-Control-Allow-Headers": "Content-Type", // Permit Content-Type header
-                "Access-Control-Allow-Methods": "GET, POST, OPTIONS" // Allowed methods for this endpoint
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                "Content-Type": "application/json"  // Ensure this is set correctly
             },
             body: JSON.stringify(tokenDetails),
         };
@@ -22,7 +23,8 @@ const handler: Handler = async (event) => {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "Content-Type",
-                "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                "Content-Type": "application/json"  // Ensure this is set correctly
             },
             body: JSON.stringify({ error: 'Failed to generate Ably token' }),
         };
