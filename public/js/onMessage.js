@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('Ably connection state changed:', stateChange.current);
         });
 
-        const channel = ably.channels.get('file-uploads');
+        const channel = ably.channels.get('file-uploads'); // Ensure this is the correct channel name
 
         channel.subscribe('new-file', (message) => {
             console.log('New file message received:', message.data);
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         channel.subscribe('control', (message) => {
+            console.log('Control message received:', message.data);
             switch (message.data.action) {
                 case 'next':
                     Slideshow.nextImage();
@@ -55,13 +56,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                         Slideshow.stopAutoplay();
                     }
                     break;
+                    case 'toggleClock':
+                        console.log('Toggling clock display');
+                        Slideshow.toggleClockDisplay();
+                        break;
             }
-        });        
-        
-        function toggleAutoplay(isAutoplayEnabled) {
-            console.log('Autoplay toggled:', isAutoplayEnabled);
-            // Implement logic to start or stop autoplay based on isAutoplayEnabled
-        }        
+        });
+
     } catch (err) {
         console.error('Error setting up Ably:', err);
     }

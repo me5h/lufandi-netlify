@@ -44,3 +44,15 @@
 .next {
   right: 0;
 }
+
+#clock {
+  position: fixed;
+  bottom: 27px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 68px;
+}

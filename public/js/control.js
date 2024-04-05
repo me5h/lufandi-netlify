@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         autoplayToggle.addEventListener('change', () => {
             channel.publish('control', { action: 'toggleAutoplay', value: autoplayToggle.checked });
         });
+
+        const clockToggle = document.getElementById("clockToggle");
+        clockToggle.addEventListener("change", async () => {
+          channel.publish('control', { action: 'toggleClock', value: clockToggle.checked });
+        });
+
     } catch (error) {
         console.error('Error initializing Ably:', error);
     }

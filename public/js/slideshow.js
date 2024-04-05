@@ -2,8 +2,10 @@ const Slideshow = (() => {
     let images = [];
     let currentIndex = 0;
     let autoplayInterval = null;
-
+    let clockInterval = null;
+    
     const container = document.getElementById('slideshow');
+    const clockElement = document.getElementById('clock');
     const nextButton = document.getElementById('next');
     const prevButton = document.getElementById('prev');
     const fullscreenButton = document.getElementById('fullscreen');
@@ -40,14 +42,43 @@ const Slideshow = (() => {
         }
     };
 
+    const updateClock = () => {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        if (clockElement) {
+            clockElement.textContent = timeString;
+        }
+    };
+
     const startAutoplay = () => {
-        if (autoplayInterval) return;
-        autoplayInterval = setInterval(nextImage, 3000); // 3 seconds for each slide
+        if (!autoplayInterval) {
+            autoplayInterval = setInterval(nextImage, 3000);
+        }
     };
 
     const stopAutoplay = () => {
         clearInterval(autoplayInterval);
         autoplayInterval = null;
+    };
+
+    const startClock = () => {
+        if (!clockInterval) {
+            updateClock();
+            clockInterval = setInterval(updateClock, 1000);
+        }
+    };
+
+    const stopClock = () => {
+        clearInterval(clockInterval);
+        clockInterval = null;
+    };
+
+    const toggleClockDisplay = () => {
+        const clockElement = document.getElementById('clock');
+        if (clockElement) {
+            clockElement.style.display = (clockElement.style.display === 'none') ? 'block' : 'none';
+            console.log('Clock display set to:', clockElement.style.display);
+        }
     };
 
     nextButton.addEventListener('click', nextImage);
@@ -62,6 +93,8 @@ const Slideshow = (() => {
         }
     });
 
+    startClock();  // Start the clock when the slideshow starts
+
     return {
         addImage: imageUrl => {
             images.push(imageUrl);
@@ -73,6 +106,9 @@ const Slideshow = (() => {
         prevImage,
         toggleFullscreen,
         startAutoplay,
-        stopAutoplay
+        stopAutoplay,
+        toggleClockDisplay,
+        startClock,
+        stopClock 
     };
 })();
