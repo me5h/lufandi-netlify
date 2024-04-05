@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('onMessage.js');
     try {
         // Fetch the token details from your Netlify function
         const tokenResponse = await fetch('/.netlify/functions/generate-ably-token');
@@ -36,12 +35,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         const channel = ably.channels.get('file-uploads');
 
         channel.subscribe('new-file', (message) => {
-            console.log('New message received:', message.data);
-
-            // Assuming message.data contains the URL or other data you need
-            const event = new CustomEvent('new-image', { detail: message.data.downloadUrl });
-            document.dispatchEvent(event);
+            console.log('New file message received:', message.data);
+            const imageUrlEvent = new CustomEvent('new-image', { detail: message.data.downloadUrl });
+            document.dispatchEvent(imageUrlEvent);
         });
+
+        channel.subscribe('control', (message) => {
+            switch (message.data.action) {
+                case 'next':
+                    Slideshow.nextImage();
+                    break;
+                case 'prev':
+                    Slideshow.prevImage();
+                    break;
+                case 'toggleAutoplay':
+                    if (message.data.value) {
+                        Slideshow.startAutoplay();
+                    } else {
+                        Slideshow.stopAutoplay();
+                    }
+                    break;
+            }
+        });        
+        
+        function toggleAutoplay(isAutoplayEnabled) {
+            console.log('Autoplay toggled:', isAutoplayEnabled);
+            // Implement logic to start or stop autoplay based on isAutoplayEnabled
+        }        
     } catch (err) {
         console.error('Error setting up Ably:', err);
     }

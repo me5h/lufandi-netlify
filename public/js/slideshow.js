@@ -7,7 +7,6 @@ const Slideshow = (() => {
     const nextButton = document.getElementById('next');
     const prevButton = document.getElementById('prev');
     const fullscreenButton = document.getElementById('fullscreen');
-    const slideshowContainer = document.getElementById('slideshow-container');
 
     const renderImage = () => {
         if (images.length === 0) {
@@ -33,8 +32,8 @@ const Slideshow = (() => {
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
-            slideshowContainer.requestFullscreen().catch(err => {
-                alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
             });
         } else {
             document.exitFullscreen();
@@ -55,13 +54,6 @@ const Slideshow = (() => {
     prevButton.addEventListener('click', prevImage);
     fullscreenButton.addEventListener('click', toggleFullscreen);
 
-    slideshowContainer.addEventListener('mouseenter', stopAutoplay);
-    slideshowContainer.addEventListener('mouseleave', startAutoplay);
-
-    // Start autoplay by default
-    startAutoplay();
-
-    // Listen for the custom event and add the received image URL to the slideshow
     document.addEventListener('new-image', (event) => {
         const imageUrl = event.detail;
         images.push(imageUrl);
@@ -71,11 +63,16 @@ const Slideshow = (() => {
     });
 
     return {
-        addImage: (imageUrl) => {
+        addImage: imageUrl => {
             images.push(imageUrl);
             if (images.length === 1) {
                 renderImage();
             }
-        }
+        },
+        nextImage,
+        prevImage,
+        toggleFullscreen,
+        startAutoplay,
+        stopAutoplay
     };
 })();

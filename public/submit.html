@@ -12,8 +12,19 @@
     </div>
     <div>Upload file here</div>
     <form class="dropzone" id="my-awesome-dropzone"></form>
-
+    <div class="controls"> 
+        <h1>Controls</h1>
+        <button id="prevTrigger">Previous</button>
+        <button id="nextTrigger">Next</button>
+        <label>
+            Autoplay:
+            <input type="checkbox" id="autoplayToggle" />
+        </label>
+        <button id="reloadTrigger">Reload Session</button>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
     <script src="/js/upload.js"></script>
+    <script src="/js/control.js"></script>
 </body>
 </html>

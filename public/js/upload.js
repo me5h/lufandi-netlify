@@ -25,6 +25,11 @@ myDropzone.on("addedfile", function(file) {
     });
 });
 
+// Optionally, listen to the "queuecomplete" event to know when all files have finished uploading
+myDropzone.on("queuecomplete", function() {
+    console.log("All files have been uploaded.");
+});
+
 myDropzone.on("sending", function(file, xhr) {
     // Set the content type header to the file's MIME type
     xhr.setRequestHeader('Content-Type', file.type);
