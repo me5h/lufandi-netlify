@@ -1,5 +1,5 @@
 const Slideshow = (() => {
-    let images = [];
+    let images = ['/assets/long-exposure.jpg'];
     let currentIndex = 0;
     let autoplayInterval = null;
     let clockInterval = null;
@@ -17,6 +17,10 @@ const Slideshow = (() => {
         }
         container.style.backgroundImage = `url('${images[currentIndex]}')`;
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderImage(); // Render the default image when the document is ready
+    });
 
     const nextImage = () => {
         if (images.length > 0) {
